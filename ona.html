@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Ona — My Ornament</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f5e6e0;
+    --rose: #d4a5a0;
+    --deep: #7a4f4b;
+    --wine: #3d1f1f;
+    --cream: #fdf6f0;
+    --mist: #e8d5cf;
+    --gold: #c9a96e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--wine);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: .4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 20% 30%, rgba(212,165,160,0.35) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 50% at 80% 70%, rgba(245,230,224,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 60% 10%, rgba(201,169,110,0.12) 0%, transparent 50%),
+      var(--cream);
+  }
+
+  .ornament-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(212,165,160,0.3);
+    animation: breathe 6s ease-in-out infinite;
+  }
+  .ornament-circle:nth-child(1) { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
+  .ornament-circle:nth-child(2) { width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1s; border-color: rgba(212,165,160,0.15); }
+  .ornament-circle:nth-child(3) { width: 900px; height: 900px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 2s; border-color: rgba(212,165,160,0.08); }
+
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%,-50%) scale(1.03); opacity: 0.7; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    animation: fadeUp 1.4s ease forwards;
+    opacity: 0;
+  }
+
+  .eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: .7rem;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 300;
+    line-height: .95;
+    color: var(--wine);
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--deep);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--rose);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    letter-spacing: .02em;
+  }
+
+  .scroll-hint {
+    font-size: .65rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--rose);
+    opacity: .6;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    animation: fadeUp 2s ease 0.6s forwards;
+    opacity: 0;
+  }
+
+  .scroll-hint::before, .scroll-hint::after {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--rose);
+    opacity: .5;
+  }
+
+  /* ── ORNAMENT SECTION ── */
+  .ornament-intro {
+    padding: 6rem 2rem;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: .65rem;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+  .ornament-intro p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.8vw, 1.75rem);
+    line-height: 1.75;
+    color: var(--wine);
+    font-weight: 300;
+  }
+
+  .ornament-intro p em {
+    font-style: italic;
+    color: var(--deep);
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--rose), transparent);
+    margin: 3rem auto;
+  }
+
+  /* ── PRINCESS BLOG ── */
+  .blog {
+    padding: 4rem 2rem 8rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .blog-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .blog-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    color: var(--wine);
+    line-height: 1.1;
+  }
+
+  .blog-header h2 em { font-style: italic; color: var(--deep); }
+
+  .blog-header p {
+    font-size: .95rem;
+    color: var(--rose);
+    margin-top: 1rem;
+    font-weight: 300;
+    letter-spacing: .05em;
+  }
+
+  /* Princess cards */
+  .princess-grid {
+    display: grid;
+    gap: 2px;
+  }
+
+  .princess-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 380px;
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    animation: fadeUp .8s ease forwards;
+    background: var(--blush);
+  }
+
+  .princess-card:nth-child(even) { direction: rtl; }
+  .princess-card:nth-child(even) > * { direction: ltr; }
+
+  .princess-card:nth-child(1) { animation-delay: .1s; }
+  .princess-card:nth-child(2) { animation-delay: .2s; }
+  .princess-card:nth-child(3) { animation-delay: .3s; }
+  .princess-card:nth-child(4) { animation-delay: .4s; }
+  .princess-card:nth-child(5) { animation-delay: .5s; }
+  .princess-card:nth-child(6) { animation-delay: .6s; }
+  .princess-card:nth-child(7) { animation-delay: .7s; }
+
+  .card-visual {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-visual-inner {
+    width: 100%;
+    height: 100%;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    position: relative;
+    transition: transform .6s ease;
+  }
+
+  .princess-card:hover .card-visual-inner {
+    transform: scale(1.04);
+  }
+
+  /* unique color per princess */
+  .princess-card:nth-child(1) .card-visual-inner { background: linear-gradient(135deg, #f0d8d5 0%, #ddb8b4 100%); }
+  .princess-card:nth-child(2) .card-visual-inner { background: linear-gradient(135deg, #d8e8d5 0%, #a8c8a4 100%); }
+  .princess-card:nth-child(3) .card-visual-inner { background: linear-gradient(135deg, #ddd8f0 0%, #b4aedc 100%); }
+  .princess-card:nth-child(4) .card-visual-inner { background: linear-gradient(135deg, #f0e8d5 0%, #dcc8a4 100%); }
+  .princess-card:nth-child(5) .card-visual-inner { background: linear-gradient(135deg, #d5e8f0 0%, #a4c8dc 100%); }
+  .princess-card:nth-child(6) .card-visual-inner { background: linear-gradient(135deg, #f0d5e8 0%, #dca4c8 100%); }
+  .princess-card:nth-child(7) .card-visual-inner { background: linear-gradient(135deg, #e8f0d5 0%, #c8dca4 100%); }
+
+  .card-number {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.4);
+    line-height: 1;
+  }
+
+  .card-body {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--cream);
+  }
+
+  .princess-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+    color: var(--wine);
+    margin-bottom: .3rem;
+    line-height: 1;
+  }
+
+  .princess-tag {
+    font-size: .65rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .card-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #5a3535;
+    font-weight: 300;
+  }
+
+  .card-text em {
+    font-style: italic;
+    color: var(--deep);
+  }
+
+  .card-ona-line {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(212,165,160,0.3);
+    font-family: 'Jost', sans-serif;
+    font-size: .85rem;
+    font-weight: 200;
+    color: var(--rose);
+    letter-spacing: .04em;
+    font-style: italic;
+  }
+
+  /* ── DISTANCE SECTION ── */
+  .distance {
+    padding: 8rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .distance-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(212,165,160,0.2) 0%, transparent 70%),
+      var(--blush);
+  }
+
+  .distance-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .distance h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    color: var(--wine);
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  .distance h2 em { font-style: italic; color: var(--deep); }
+
+  .distance p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    line-height: 1.9;
+    color: var(--deep);
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+
+  .jealous-note {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: .8rem 2rem;
+    border: 1px solid rgba(212,165,160,0.5);
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    color: var(--rose);
+    border-radius: 100px;
+  }
+
+  /* ── CLOSING LETTER ── */
+  .letter {
+    padding: 8rem 2rem;
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .letter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--wine);
+    margin-bottom: 3rem;
+  }
+
+  .letter p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #5a3535;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .letter p em { color: var(--deep); font-style: italic; }
+
+  .letter-sign {
+    margin-top: 3rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--rose);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem;
+    font-size: .65rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(122,79,75,0.4);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── FLOATING PETALS ── */
+  .petal {
+    position: fixed;
+    width: 6px;
+    height: 10px;
+    border-radius: 50% 0 50% 0;
+    background: rgba(212,165,160,0.35);
+    pointer-events: none;
+    animation: fall linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: .3; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── RESPONSIVE — TABLET ── */
+  @media (max-width: 900px) {
+    .princess-card {
+      grid-template-columns: 1fr 1fr;
+    }
+    .card-body { padding: 2rem; }
+    .card-visual-inner { min-height: 300px; font-size: 5rem; }
+  }
+
+  /* ── RESPONSIVE — MOBILE ── */
+  @media (max-width: 700px) {
+
+    /* Hero */
+    .hero { padding: 3rem 1.5rem; }
+    .ornament-circle:nth-child(1) { width: 280px; height: 280px; }
+    .ornament-circle:nth-child(2) { width: 420px; height: 420px; }
+    .ornament-circle:nth-child(3) { width: 560px; height: 560px; }
+    .eyebrow { font-size: .6rem; letter-spacing: .25em; margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+    .scroll-hint { font-size: .6rem; letter-spacing: .2em; }
+    .scroll-hint::before, .scroll-hint::after { width: 1.2rem; }
+
+    /* Ornament intro */
+    .ornament-intro { padding: 4rem 1.5rem; }
+    .ornament-intro p { font-size: 1.15rem; line-height: 1.7; }
+
+    /* Blog */
+    .blog { padding: 3rem 0 5rem; }
+    .blog-header { padding: 0 1.5rem; margin-bottom: 3rem; }
+    .blog-header p { font-size: .85rem; }
+
+    /* Princess cards — stack vertically */
+    .princess-card {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    .princess-card:nth-child(even) { direction: ltr; }
+
+    /* Emoji panel on top, text below */
+    .card-visual { order: 0; }
+    .card-body   { order: 1; }
+
+    .card-visual-inner {
+      min-height: 160px;
+      font-size: 4.5rem;
+    }
+
+    .card-number {
+      font-size: 3.5rem;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    .card-body { padding: 1.8rem 1.5rem 2rem; }
+
+    .princess-name { font-size: 2rem; }
+    .princess-tag  { font-size: .6rem; letter-spacing: .22em; margin-bottom: 1rem; }
+    .card-text     { font-size: 1.05rem; line-height: 1.75; }
+    .card-ona-line { font-size: .8rem; margin-top: 1.2rem; padding-top: 1.2rem; }
+
+    /* Distance */
+    .distance { padding: 5rem 1.5rem; }
+    .distance p { font-size: 1.05rem; line-height: 1.8; }
+    .jealous-note {
+      font-size: .72rem;
+      letter-spacing: .08em;
+      padding: .7rem 1.4rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Letter */
+    .letter { padding: 5rem 1.5rem; }
+    .letter p { font-size: 1.05rem; line-height: 1.85; }
+    .letter-sign { font-size: 1.3rem; }
+
+    /* Footer */
+    footer { padding: 2rem 1.5rem; font-size: .6rem; letter-spacing: .2em; }
+
+    /* Divider spacing */
+    .divider { margin: 2rem auto; }
+    .section-label { margin-bottom: 1.5rem; }
+  }
+
+  /* ── RESPONSIVE — SMALL PHONES ── */
+  @media (max-width: 380px) {
+    .hero h1 { font-size: 3.8rem; }
+    .hero-subtitle { font-size: .95rem; }
+    .ornament-intro p { font-size: 1.05rem; }
+    .blog-header h2 { font-size: 2rem; }
+    .card-visual-inner { min-height: 130px; font-size: 3.8rem; }
+    .princess-name { font-size: 1.8rem; }
+    .card-text { font-size: 1rem; }
+    .distance h2 { font-size: 1.9rem; }
+    .letter h2 { font-size: 1.8rem; }
+    .jealous-note { font-size: .68rem; padding: .6rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- floating petals -->
+<script>
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `
+      left: ${Math.random()*100}vw;
+      animation-duration: ${10 + Math.random()*15}s;
+      animation-delay: ${Math.random()*15}s;
+      width: ${4+Math.random()*6}px;
+      height: ${6+Math.random()*8}px;
+      opacity: ${0.2+Math.random()*.3};
+    `;
+    document.body.appendChild(p);
+  }
+</script>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="ornament-circle"></div>
+    <div class="ornament-circle"></div>
+    <div class="ornament-circle"></div>
+  </div>
+  <div class="hero-content">
+    <p class="eyebrow">A letter written in light</p>
+    <h1>For <em>Ona</em></h1>
+    <p class="hero-subtitle">my ornament, my favourite kind of rare thing</p>
+    <div class="scroll-hint">read softly</div>
+  </div>
+</section>
+
+<!-- ── ORNAMENT INTRO ── -->
+<section class="ornament-intro">
+  <span class="section-label">The Name I Gave You</span>
+  <p>
+    An ornament isn't just decoration — it's the thing you handle with the most care.
+    The thing you keep coming back to. The thing that, if it fell, <em>you'd feel it.</em>
+    That's you, Ona. Clumsy and brave and somehow the most delicate thing
+    I know. You bump into every corner life puts in front of you and keep going
+    anyway — and I think that's one of the most quietly beautiful things I've
+    ever watched someone do.
+  </p>
+  <div class="divider"></div>
+  <p>
+    Three years of silence is a long time. A long time to carry something.
+    And then one day the silence just — ended. And here we are.
+    <em>I'm glad we're here.</em>
+  </p>
+</section>
+
+<!-- ── PRINCESS BLOG ── -->
+<section class="blog">
+  <div class="blog-header">
+    <span class="section-label">The Princess Chronicles</span>
+    <h2>Seven names I've called you<br><em>& why every one fits</em></h2>
+    <p>Because every morning I wake up and a different princess comes to mind. This is me explaining myself.</p>
+  </div>
+
+  <div class="princess-grid">
+
+    <!-- 1. Rapunzel -->
+    <article class="princess-card">
+      <div class="card-visual">
+        <div class="card-visual-inner">
+          🌿
+          <span class="card-number">01</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="princess-name">Rapunzel</h3>
+        <span class="princess-tag">The one who waited & still bloomed</span>
+        <p class="card-text">
+          Rapunzel spent years locked away from the world, and instead of
+          shrinking she <em>grew</em> — filled her tower with art and colour and
+          herself. When she finally got out she didn't run from life, she
+          sprinted toward it with terrifying hope. That energy you carry — that
+          willingness to still want things after hard seasons — that's Rapunzel.
+        </p>
+        <p class="card-ona-line">"You waited out the quiet and came back luminous. That's not small."</p>
+      </div>
+    </article>
+
+    <!-- 2. Fiona -->
+    <article class="princess-card">
+      <div class="card-visual">
+        <div class="card-visual-inner">
+          🌸
+          <span class="card-number">02</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="princess-name">Fiona</h3>
+        <span class="princess-tag">The one who is more than one thing</span>
+        <p class="card-text">
+          Everyone always underestimates Fiona. They see the surface and miss
+          the depth. She's complex, surprisingly funny, fiercely loyal, and
+          deeply tender underneath the armour. She doesn't need to be rescued —
+          she just needs someone to <em>actually look.</em> You're Fiona because
+          you are so much more than what people catch at first glance.
+        </p>
+        <p class="card-ona-line">"Layers and layers, and every one worth knowing."</p>
+      </div>
+    </article>
+
+    <!-- 3. Cinderella -->
+    <article class="princess-card">
+      <div class="card-visual">
+        <div class="card-visual-inner">
+          ✨
+          <span class="card-number">03</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="princess-name">Cinderella</h3>
+        <span class="princess-tag">The one with grace in hard circumstances</span>
+        <p class="card-text">
+          Not for the glass slipper — for the part where she kept her softness
+          intact through everything that tried to take it from her. There's
+          something almost defiant about staying gentle when the world gives
+          you reasons not to. You do that. You stay <em>you</em>. That's harder
+          than it looks.
+        </p>
+        <p class="card-ona-line">"Grace that costs something is the only kind that matters."</p>
+      </div>
+    </article>
+
+    <!-- 4. Moana -->
+    <article class="princess-card">
+      <div class="card-visual">
+        <div class="card-visual-inner">
+          🌊
+          <span class="card-number">04</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="princess-name">Moana</h3>
+        <span class="princess-tag">The one who goes anyway</span>
+        <p class="card-text">
+          Moana had every reason to stay where it was safe. She went anyway.
+          Not recklessly — she was <em>terrified</em>. But the pull toward
+          something true was stronger than the fear. The distance between us
+          has never stopped you from being present. That kind of courage is
+          exactly Moana's. You don't let geography win.
+        </p>
+        <p class="card-ona-line">"The ocean couldn't stop her. Miles can't stop you either."</p>
+      </div>
+    </article>
+
+    <!-- 5. Aurora -->
+    <article class="princess-card">
+      <div class="card-visual">
+        <div class="card-visual-inner">
+          🌙
+          <span class="card-number">05</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="princess-name">Aurora</h3>
+        <span class="princess-tag">The one whose calm is magnetic</span>
+        <p class="card-text">
+          Sleeping Beauty's whole thing is this inexplicable quality —
+          everyone who meets her just wants to be around her, and she doesn't
+          even try. She radiates something peaceful. That's the version of you
+          I think you don't always see: the one who makes a room feel easier
+          to be in just by <em>being in it.</em>
+        </p>
+        <p class="card-ona-line">"You calm things down without knowing you're doing it."</p>
+      </div>
+    </article>
+
+    <!-- 6. Merida -->
+    <article class="princess-card">
+      <div class="card-visual">
+        <div class="card-visual-inner">
+          🏹
+          <span class="card-number">06</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="princess-name">Merida</h3>
+        <span class="princess-tag">The one who refuses to be handled</span>
+        <p class="card-text">
+          Merida is stubborn in the exact right way. She knows her own mind.
+          She doesn't perform for anyone. When she's wrong she figures it out
+          herself and comes back with a full heart. She's <em>real</em> in a way
+          that most people aren't. That's you on the days you push back on me.
+          Honestly? Good. Don't stop.
+        </p>
+        <p class="card-ona-line">"I don't want easy. I want you, exactly how you are."</p>
+      </div>
+    </article>
+
+    <!-- 7. Tiana -->
+    <article class="princess-card">
+      <div class="card-visual">
+        <div class="card-visual-inner">
+          🌟
+          <span class="card-number">07</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="princess-name">Tiana</h3>
+        <span class="princess-tag">The one who builds something real</span>
+        <p class="card-text">
+          Tiana is the most grounded princess there is. She dreams, but she
+          also <em>works</em>. She loves deeply but never loses herself in it.
+          She earns what she has and holds onto it with both hands. There's
+          a version of you that knows exactly what she wants from life and
+          is already quietly building it. That version is Tiana. She's
+          the one I respect most.
+        </p>
+        <p class="card-ona-line">"You know what you're made of. I think you always have."</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── DISTANCE ── -->
+<section class="distance">
+  <div class="distance-bg"></div>
+  <div class="distance-content">
+    <span class="section-label">On Distance</span>
+    <h2>Miles are real.<br><em>So is this.</em></h2>
+    <p>
+      Long distance has its own kind of weight. It's the 3am math
+      of time zones. The way a day can feel so full and then you realise
+      the person you most wanted to tell wasn't there for any of it.
+    </p>
+    <p>
+      But here's what distance can't touch: the fact that you're still
+      the first person I think to tell things to. That hasn't changed
+      across three years of silence or a thousand kilometers of geography.
+    </p>
+    <p>
+      And yes — I do get a little territorial when you bring up other guys.
+      I'm not going to pretend I don't. It's not about control, it's just —
+      you matter, and some things remind me of that more sharply than I expect.
+      <em>You can tease me about it. I probably deserve it.</em>
+    </p>
+    <span class="jealous-note">yes, the jealousy is a you problem — a you-matter-a-lot problem</span>
+  </div>
+</section>
+
+<!-- ── CLOSING LETTER ── -->
+<section class="letter">
+  <h2>A small letter,<br>for the record</h2>
+
+  <p>
+    I don't say this to make you feel any particular way. I say it because it's
+    true and I've learned that leaving true things unsaid is a waste.
+  </p>
+  <p>
+    You are <em>the most specific kind of wonderful</em> — not a general, vague
+    wonderful that could apply to anyone, but the specific kind that only makes
+    sense when it's you. The way you're clumsy and then laugh at yourself.
+    The way you keep bumping into the world and the world somehow doesn't manage
+    to make you hard.
+  </p>
+  <p>
+    Three years is a long gap. And somehow you come back into a conversation
+    and nothing about why I care has moved. <em>That's not nothing, Ona.</em>
+    That's something I don't take lightly.
+  </p>
+  <p>
+    You're my ornament. The kind you don't put in storage.
+    The kind you keep out, where you can see it.
+  </p>
+
+  <div class="divider"></div>
+
+  <p class="letter-sign">Always careful with you,<br>always.</p>
+</section>
+
+<footer>
+  made for ona &nbsp;·&nbsp; with every bit of it meant
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animationPlayState = 'running';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.princess-card').forEach(card => {
+    card.style.animationPlayState = 'paused';
+    observer.observe(card);
+  });
+</script>
+
+</body>
+</html>
